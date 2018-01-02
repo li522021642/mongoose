@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>文件上传：</h3>
+选择一个文件上传: <br />
+<form id="form">
+    名字：<input id="name" type="text" value="图片">
+    <input type="file" id="file" name="image" size="50" />
+    <br />
+    <input type="button" value="上传文件" id="btn"/>
+</form>
+</body>
+<script src="../js/jquery-1.9.1.min.js"></script>
+<script>
+    $("#btn").click(function () {
+        let url = "http://127.0.0.1:3000/file_upload";
+        var formData = new FormData();
+        formData.append("name", $("#name").val());
+        formData.append("image", $("#file")[0].files[0]);
+        console.log(formData);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            contentType: false, //为服务器能正确解析数据
+            processData: false, //不序列化
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+    })
+
+
+</script>
+</html>
